@@ -16,7 +16,6 @@ select
                 ,b.sbill_overring
                 ,b.sbill_businessday
                 ,t.stot_total2
-               -- ,(select sum(case when mmvr_code in (30,31,32,33,34,35,36,37,38,39) then mmvr_amount + mmvr_vat end) from v3_matmovementpr1 m where m.mmvr_date = b.sbill_businessday and mmvr_storeid = sbill_storeid) as summa
                 ,(select sum(case when sbill_overring=0 then sbill_qpersons when sbill_overring=2 then -sbill_qpersons end)  from sale_bill_t0 where sbill_businessday = b.sbill_businessday and sbill_storeid = b.sbill_storeid) as person
 
                 
