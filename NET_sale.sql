@@ -20,7 +20,8 @@ select
                 ,b.sbill_businessday
                 ,t.stot_total2
  
-                ,(select sum(case when sbill_overring=0 then sbill_qpersons when sbill_overring=2 then -sbill_qpersons end)  from sale_bill_t0 where sbill_businessday = b.sbill_businessday and sbill_storeid = b.sbill_storeid) as person
+                ,(select sum(case when sbill_overring=0 then sbill_qpersons when sbill_overring=2 then -sbill_qpersons end)  
+		  from sale_bill_t0 where sbill_businessday = b.sbill_businessday and sbill_storeid = b.sbill_storeid) as person
 
                 
                 FROM sale_bill_t0 b 
@@ -34,7 +35,8 @@ select
                       left join 
                       (select mmvr_storeid, mmvr_date, sum(case when mmvr_code in (30,31,32,33,34,35,36,37,38,39) then mmvr_amount + mmvr_vat end) as seb 
                       from v3_matmovementpr1 
-                      where mmvr_date  BETWEEN '2017-08-01' AND '2017-08-31' and mmvr_storeid in (021, 022, 023, 024, 025, 026) group by mmvr_date, mmvr_storeid) as summa 
+                      where mmvr_date  BETWEEN '2017-08-01' AND '2017-08-31' and mmvr_storeid in (021, 022, 023, 024, 025, 026) 
+		      group by mmvr_date, mmvr_storeid) as summa 
                       on  sbill_businessday = summa.mmvr_date and  sbill_storeid = summa.mmvr_storeid
                      
                       left join 
